@@ -26,7 +26,10 @@ class User(UserMixin):
     @staticmethod
     @loginManager.user_loader
     def load_user(_login):
-        return User.userList[_login]
+        if _login not in User.userList:
+            return None
+        else:
+            return User.userList[_login]
 
     @staticmethod
     def load(_context):

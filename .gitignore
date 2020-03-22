@@ -1,5 +1,17 @@
+# IDE systwm files
 /.idea
+
+# Python internal
 /venv
-/__pycache__
+__pycache__/
+
+# Local app env and data
 /app/data
 /.env
+
+# Cython compile output
+/build
+*.c
+*.so
+*.html
+!templates/*.html

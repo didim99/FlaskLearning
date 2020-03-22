@@ -92,9 +92,26 @@ ul.msg-wrapper {
   list-style: none;
   margin: 15px 5px;
   padding: 20px;
+}
+
+ul.msg-wrapper.info {
   background-color: #181d46;
   border: 1px solid #c4d6ff;
   color: #c4d6ff;
+}
+
+ul.msg-wrapper.error {
+  background-color: #461c18;
+  border: 1px solid #ffc7c4;
+  color: #ffc7c4;
+}
+
+ul.err {
+  display: block;
+  list-style: none;
+  margin: 5px;
+  padding-left: 10px;
+  color: #ffc7c4;
 }
 
 .auth {

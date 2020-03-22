@@ -12,16 +12,18 @@
         [<a href="{{ url_for('logout') }}">Выйти</a>]
     </div>
     {% endif %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="msg-wrapper">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        <hr/>
-        {% endif %}
-    {% endwith %}
+    {% for category in ['error', 'info'] %}
+        {% with messages = get_flashed_messages(False, category) %}
+            {% if messages %}
+            <ul class="msg-wrapper {{ category }}">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            <hr/>
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
     {% block content %}{% endblock %}
 </body>
 </html>

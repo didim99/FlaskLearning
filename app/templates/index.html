@@ -2,5 +2,23 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
-
+    <hr/>
+    <form action="" method="POST">
+        {{ keyGenForm.hidden_tag() }}
+        Сгенерировать ключ длиной
+        <select name="{{ ATTR_KEY_LEN }}">
+            {% for len in get_key_lengths() %}
+            <option value="{{ len }}">{{ len }} бит</option>
+            {% endfor %}
+        </select>
+        {{ keyGenForm.submit() }}
+    </form>
+    <div class="header">Параметры ключа</div>
+    <form action="" method="POST">
+        {{ keySetForm.hidden_tag() }}
+        {{ keySetForm.keyE.label }}: {{ keySetForm.keyE(class=keyField) }}
+        {{ keySetForm.keyD.label }}: {{ keySetForm.keyD(class=keyField) }}
+        {{ keySetForm.keyN.label }}: {{ keySetForm.keyN(class=keyField) }}
+        {{ keySetForm.submit() }}
+    </form>
 {% endblock %}
