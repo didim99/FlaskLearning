@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import HiddenField, StringField, IntegerField, PasswordField, SubmitField
+from wtforms import StringField, IntegerField, PasswordField
+from wtforms import HiddenField, TextAreaField, FileField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
 
@@ -21,14 +22,21 @@ class AuthForm(FlaskForm):
 
 
 class KeyGenForm(FlaskForm):
-    action = HiddenField(default=ACTION_GEN_KEY)
+    action = HiddenField(render_kw={'value': ACTION_GEN_KEY})
     length = IntegerField('Длина ключа', validators=[DataRequired()])
     submit = SubmitField('Сгенерировать')
 
 
 class KeySetForm(FlaskForm):
-    action = HiddenField(default=ACTION_SET_KEY)
+    action = HiddenField(render_kw={'value': ACTION_SET_KEY})
     keyE = IntegerField('E', validators=[DataRequired(), NumberRange()])
     keyD = IntegerField('D', validators=[DataRequired(), NumberRange()])
     keyN = IntegerField('N', validators=[DataRequired(), NumberRange()])
     submit = SubmitField('Установить')
+
+
+class MessageForm(FlaskForm):
+    action = HiddenField(render_kw={'value': ACTION_GO})
+    message = TextAreaField()
+    inFile = FileField()
+    submit = SubmitField('Зашифровать')

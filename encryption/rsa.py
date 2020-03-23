@@ -1,7 +1,7 @@
 from encryption.fastmath import inversem, powm
 from encryption.sieve import SieveEratosthenes
+from array import array
 import random
-import struct
 
 
 class RSAKey(object):
@@ -64,17 +64,16 @@ class RSAProcessor(object):
     def encrypt(self, message: str):
         message = message.encode('utf-8')
 
-        size = len(message)
-        data = [size]
+        data = array('i', [len(message)])
         for b in message:
             data.append(powm(int(b), self.key.e, self.key.n))
-        return struct.pack('>i'*(size+1), data)
+        return data.tobytes()
 
     def decrypt(self, data):
-        size = int.from_bytes(data, 'big', signed=True)
-        data = struct.unpack('>i'*size, data[4:])
-        array = bytearray()
+        buffer = array('i')
+        buffer.frombytes(data)
+        out_buffer = bytearray()
 
-        for num in data:
-            array.append(powm(num, self.key.d, self.key.n))
-        return array.decode('utf-8')
+        for num in buffer[1:]:
+            out_buffer.append(powm(num, self.key.d, self.key.n))
+        return out_buffer.decode('utf-8')

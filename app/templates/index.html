@@ -21,4 +21,31 @@
         {{ keySetForm.keyN.label }}: {{ keySetForm.keyN(class=keyField) }}
         {{ keySetForm.submit() }}
     </form>
+    <hr/>
+    <div class="wrapper">
+        <div class="header">Исходное сообщение</div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{ messageForm.hidden_tag() }}
+            {{ messageForm.message(wrap=hard, cols=90, rows=6,
+                  placeholder='Введите сообщение', value=manager.message) }}
+            <div class="go-wrapper">
+                Или загрузите текстовый файл: {{ messageForm.inFile() }}
+                <div class="go">{{ messageForm.submit() }}</div>
+            </div>
+        </form>
+    </div>
+    {% if manager.encryptedData %}
+    <hr/>
+    <div class="wrapper">
+        <div class="header">Зашифрованное сообщение</div>
+        <div class="pre-wrapper"><pre>{{ manager.describe_encrypted() }}</pre></div>
+    </div>
+    {% endif %}
+    {% if manager.decryptedData %}
+    <hr/>
+    <div class="wrapper">
+        <div class="header">Результат дешифровки</div>
+        <div class="pre-wrapper"><pre>{{ manager.decryptedData }}</pre></div>
+    </div>
+    {% endif %}
 {% endblock %}

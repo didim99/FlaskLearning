@@ -3,7 +3,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from app.forms import ATTR_MANAGER, ATTR_ACTION
 from app.forms import ACTION_GEN_KEY, ACTION_SET_KEY, ACTION_GO
-from app.forms import AuthForm, KeyGenForm, KeySetForm
+from app.forms import AuthForm, KeyGenForm, KeySetForm, MessageForm
 from app.models import User
 from app import app
 from encryption import CryptoManager
@@ -17,12 +17,14 @@ def index():
         return redirect(url_for('auth'))
 
     if ATTR_MANAGER not in app.extensions:
-       app.extensions[ATTR_MANAGER] = CryptoManager()
+        app.extensions[ATTR_MANAGER] = CryptoManager()
     manager = app.extensions[ATTR_MANAGER]
+    manager.clear()
 
     action = None
     keygenform = KeyGenForm()
     keysetform = KeySetForm()
+    messageform = MessageForm()
     if ATTR_ACTION in request.values:
         action = request.values[ATTR_ACTION]
     if manager.key:
@@ -41,13 +43,27 @@ def index():
     elif action == ACTION_SET_KEY:
         if keysetform.validate_on_submit():
             manager.key = RSAKey(keysetform.e.data, keysetform.d.data, keysetform.n.data)
-        if keysetform.length.errors:
+        if keysetform.keyE.errors or keysetform.keyD.errors or keysetform.keyN.errors:
             flash('Invalid key parameters', 'error')
     elif action == ACTION_GO:
-        pass
+        if messageform.validate_on_submit():
+            message = messageform.message.data
+            file = messageform.inFile.data
 
-    return render_template('index.html', title="Система шифрования RSA", manager=manager,
-                           keyGenForm=keygenform, keySetForm=keysetform)
+            if not manager.key:
+                flash('Key not defined', 'error')
+            elif not message and not file.filename:
+                flash('Empty message', 'error')
+            else:
+                if message:
+                    manager.message = message
+                else:
+                    manager.load_file(file)
+                manager.process()
+
+    return render_template('index.html', title="Система шифрования RSA",
+                           manager=manager, keyGenForm=keygenform,
+                           keySetForm=keysetform, messageForm=messageform)
 
 
 @app.route('/auth', methods=['GET', 'POST'])
