@@ -48,24 +48,26 @@ textarea {
 }
 
 input[type=submit],
-button {
+button, a.button {
+  display: inline-block;
   padding: 5px 20px;
   background-color: #404040;
   border: 1px solid #a0a0a0;
   border-radius: 5px;
   color: #ffffff;
+  font-size: 15px;
   font-weight: bold;
   text-transform: uppercase;
   transition: all 100ms;
 }
 
 input[type=submit]:hover,
-button:hover {
+button:hover, a.button:hover {
   background-color: #606060;
 }
 
 input[type=submit]:active,
-button:active {
+button:active, a.button:active {
   border-color: #6060ff;
   color: #6060ff;
 }
@@ -106,6 +108,22 @@ ul.msg-wrapper.error {
   color: #ffc7c4;
 }
 
+a.auth-vk {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 3px;
+  background-image: url('../img/vk.png');
+  background-size: contain;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 150ms;
+}
+
+a.auth-vk:hover {
+  opacity: 0.8;
+}
+
 ul.err {
   display: block;
   list-style: none;
@@ -115,8 +133,19 @@ ul.err {
 }
 
 .auth {
-  margin-top: 10px;
+  margin-top: 15px;
   text-align: right;
+}
+
+.auth .desc {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.avatar {
+  display: block;
+  margin-left: 10px;
 }
 
 .header {
@@ -129,6 +158,10 @@ ul.err {
   display: inline-block;
 }
 
+#message {
+  width: 1000px;
+}
+
 .go-wrapper {
   margin-top: 10px;
 }
@@ -139,6 +172,7 @@ ul.err {
 }
 
 .pre-wrapper {
+  width: 1000px;
   max-height: 400px;
   overflow-y: auto;
 }

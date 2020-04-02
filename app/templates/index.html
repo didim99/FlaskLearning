@@ -3,7 +3,7 @@
 {% block content %}
     <h1>{{ title }}</h1>
     <hr/>
-    <form action="" method="POST">
+    <form action="{{ url_for('index') }}" method="POST">
         {{ keyGenForm.hidden_tag() }}
         Сгенерировать ключ длиной
         <select name="{{ ATTR_KEY_LEN }}">
@@ -14,7 +14,7 @@
         {{ keyGenForm.submit() }}
     </form>
     <div class="header">Параметры ключа</div>
-    <form action="" method="POST">
+    <form action="{{ url_for('index') }}" method="POST">
         {{ keySetForm.hidden_tag() }}
         {{ keySetForm.keyE.label }}: {{ keySetForm.keyE(class=keyField) }}
         {{ keySetForm.keyD.label }}: {{ keySetForm.keyD(class=keyField) }}
@@ -24,7 +24,7 @@
     <hr/>
     <div class="wrapper">
         <div class="header">Исходное сообщение</div>
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data">
             {{ messageForm.hidden_tag() }}
             {{ messageForm.message(wrap=hard, cols=90, rows=6,
                   placeholder='Введите сообщение', value=manager.message) }}

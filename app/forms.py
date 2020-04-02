@@ -4,6 +4,7 @@ from wtforms import HiddenField, TextAreaField, FileField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
 
 
+ATTR_DATA = 'data'
 ATTR_ACTION = 'action'
 ATTR_MANAGER = 'manager'
 ATTR_KEY_LEN = 'length'
@@ -13,6 +14,7 @@ ATTR_KEY_N = 'keyN'
 ACTION_GEN_KEY = 'gen_key'
 ACTION_SET_KEY = 'set_key'
 ACTION_GO = 'go'
+ACTION_POST = 'post'
 
 
 class AuthForm(FlaskForm):
